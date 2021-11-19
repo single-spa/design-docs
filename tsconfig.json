@@ -1,5 +1,5 @@
 {
-  "files": ["src/ComponentLibrary.ts"],
+  "files": ["src/DesignDocComponents.ts"],
   "compilerOptions": {
     "declaration": true,
     "emitDeclarationOnly": true,
@@ -11,6 +11,7 @@
     "resolveJsonModule": true,
     "strictNullChecks": true,
     "sourceMap": true,
+    "experimentalDecorators": true,
     "lib": [
       "dom",
       "es5",
