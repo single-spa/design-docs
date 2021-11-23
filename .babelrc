@@ -1,12 +1,14 @@
 {
+  "assumptions": { "setPublicClassFields": true },
   "presets": ["@babel/preset-typescript"],
   "plugins": [
     [
       "@babel/plugin-proposal-decorators",
       {
-        "legacy": true
+        "decoratorsBeforeExport": true
       }
     ],
-    "babel-plugin-add-import-extension"
+    "babel-plugin-add-import-extension",
+    "@babel/plugin-proposal-class-properties"
   ]
 }
