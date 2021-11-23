@@ -1,12 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <design-doc-documentation></design-doc-documentation>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      window.addEventListener("load", () => {
+        console.info("LOADED");
+        const nav = document.querySelector("design-docs-sidenav");
+        console.info("Sidenav:", nav);
+        nav.routes = [
+          {
+            label: "Intro",
+            path: "sample/path",
+          },
+          {
+            label: "Flat Button",
+            path: "buttons/flat",
+            group: "Buttons",
+          },
+        ];
+        nav.routeTree = [
+          {
+            type: "route",
+            index: 0,
+          },
+          {
+            type: "group",
+            label: "Buttons",
+            children: [
+              {
+                type: "route",
+                index: 1,
+              },
+            ],
+          },
+        ];
+      });
+    </script>
+    <design-doc-documentation></design-doc-documentation>
+    <design-docs-sidenav> </design-docs-sidenav>
+  </body>
 </html>
