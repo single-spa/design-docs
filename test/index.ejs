@@ -15,11 +15,20 @@
         nav.routes = [
           {
             label: "Intro",
-            path: "sample/path",
+            path: "intro",
+          },
+          {
+            label: "Typography",
+            path: "style/typography",
           },
           {
             label: "Flat Button",
             path: "buttons/flat",
+            group: "Buttons",
+          },
+          {
+            label: "Icon Button",
+            path: "buttons/icon",
             group: "Buttons",
           },
         ];
@@ -29,19 +38,34 @@
             index: 0,
           },
           {
+            type: "route",
+            index: 1,
+          },
+          {
             type: "group",
             label: "Buttons",
             children: [
               {
                 type: "route",
-                index: 1,
+                index: 2,
+              },
+              {
+                type: "route",
+                index: 3,
               },
             ],
           },
         ];
       });
     </script>
-    <design-doc-documentation></design-doc-documentation>
-    <design-docs-sidenav> </design-docs-sidenav>
+    <design-docs-root>
+      <design-docs-sidebar slot="sidebar">
+        <design-docs-sidebar-header logoSrc="./logo.svg" slot="header"
+          >DesignDocs Demo</design-docs-sidebar-header
+        >
+        <design-docs-sidenav slot="content"></design-docs-sidenav>
+      </design-docs-sidebar>
+      <div style="flex: 1" slot="content">x</div>
+    </design-docs-root>
   </body>
 </html>

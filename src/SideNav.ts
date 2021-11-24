@@ -28,22 +28,33 @@ export class SideNavElement extends LitElement {
   @property({ attribute: false, type: Array })
   routeTree: RouteTree = [];
 
-  constructor() {
-    super();
-  }
+  static styles = css`
+    ul {
+      margin-block-start: var(--sidenav-item-spacing, 0.25em);
+      margin-block-end: var(--sidenav-item-spacing, 0.25em);
+    }
+    li:not(:first-child) {
+      margin-top: var(--sidenav-item-spacing, 0.25em);
+    }
+    li:not(:last-child) {
+      margin-bottom: var(--sidenav-item-spacing, 0.25em);
+    }
+  `;
 
   render() {
-    return html`<div>
-      ${this.routeTree.map((item) => this.renderTreeItem(item))}
-    </div>`;
+    return html`<nav>
+      <ul>
+        ${this.routeTree.map((item) => this.renderTreeItem(item))}
+      </ul>
+    </nav>`;
   }
 
   renderTreeItem(treeItem: RouteTreeItem) {
     if (treeItem.type === RouteTreeItemType.GROUP) {
-      return html`<design-docs-tree-group label="${treeItem.label}">
+      return html`<design-docs-sidenav-group label="${treeItem.label}">
         ${treeItem.children?.map((item) =>
           this.renderTreeItem(item)
-        )}</design-docs-tree-group
+        )}</design-docs-sidenav-group
       >`;
     } else {
       const route: Route = this.routes[treeItem.index];
@@ -55,13 +66,36 @@ export class SideNavElement extends LitElement {
 /**
  * An expandable group used by sidenav
  */
-@customElement("design-docs-tree-group")
-export class TreeGroupElement extends LitElement {
+@customElement("design-docs-sidenav-group")
+export class SideNavGroupElement extends LitElement {
+  /**
+   * Whether group is expanded. Updated on interaction
+   */
   @property()
   expanded = false;
 
+  /**
+   * Label to render for group
+   */
   @property()
   label = "";
+
+  static styles = css`
+    ul {
+      margin-block-start: var(--sidenav-item-spacing, 0.25em);
+      margin-block-end: var(--sidenav-item-spacing, 0.25em);
+      padding-inline-start: var(--sidenav-group-indent, 1.25em);
+    }
+    li:not(:first-child) {
+      margin-top: var(--sidenav-item-spacing, 0.25em);
+    }
+    li:not(:last-child) {
+      margin-bottom: var(--sidenav-item-spacing, 0.25em);
+    }
+    span[aria-expanded="false"] + ul {
+      display: none;
+    }
+  `;
 
   render() {
     return html`<li>
@@ -72,7 +106,7 @@ export class TreeGroupElement extends LitElement {
         aria-role="treeitem"
         >${this.label}</span
       >
-      <ul style="${!this.expanded ? "display: none" : ""}">
+      <ul>
         <slot></slot>
       </ul>
     </li>`;
