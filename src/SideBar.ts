@@ -21,7 +21,7 @@ export class SideBarHeaderElement extends LitElement {
       font-size: var(--sidebar-header-font-size, 1.25rem);
     }
     img {
-      width: var(--side-bar-header-font-size, 1.25rem);
+      width: var(--sidebar-header-font-size, 1.25rem);
       margin-right: 0.25em;
     }
   `;
