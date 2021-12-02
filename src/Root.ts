@@ -7,6 +7,7 @@ export class RootElement extends LitElement {
     :host {
       position: absolute;
       top: 0;
+      left: 0;
       bottom: 0;
       display: flex;
       flex-direction: row;

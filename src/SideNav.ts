@@ -29,6 +29,9 @@ export class SideNavElement extends LitElement {
   routeTree: RouteTree = [];
 
   static styles = css`
+    :host {
+      font-family: var(--sidenav-font);
+    }
     ul {
       margin-block-start: var(--sidenav-item-spacing, 0.25em);
       margin-block-end: var(--sidenav-item-spacing, 0.25em);
@@ -81,6 +84,9 @@ export class SideNavGroupElement extends LitElement {
   label = "";
 
   static styles = css`
+    :host {
+      font-family: var(--sidenav-font);
+    }
     ul {
       margin-block-start: var(--sidenav-item-spacing, 0.25em);
       margin-block-end: var(--sidenav-item-spacing, 0.25em);
