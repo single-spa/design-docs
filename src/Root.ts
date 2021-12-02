@@ -2,7 +2,7 @@ import { LitElement, css, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 @customElement("design-docs-root")
-class RootElement extends LitElement {
+export class RootElement extends LitElement {
   static styles = css`
     :host {
       position: absolute;
