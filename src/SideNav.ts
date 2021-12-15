@@ -1,5 +1,6 @@
 import { LitElement, css, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 
 import {
   RouteTreeItem,
@@ -28,6 +29,9 @@ export class SideNavElement extends LitElement {
   @property({ attribute: false, type: Array })
   routeTree: RouteTree = [];
 
+  @property({ attribute: true, type: Boolean })
+  searchable = false;
+
   static styles = css`
     :host {
       font-family: var(--sidenav-font);
@@ -42,14 +46,22 @@ export class SideNavElement extends LitElement {
     li:not(:last-child) {
       margin-bottom: var(--sidenav-item-spacing, 0.25em);
     }
+    .hidden {
+      display: none;
+    }
   `;
 
   render() {
-    return html`<nav>
-      <ul>
-        ${this.routeTree.map((item) => this.renderTreeItem(item))}
-      </ul>
-    </nav>`;
+    const searchClasses = { hidden: !this.searchable };
+    return html` <design-docs-sidenav-search
+        @search=${this.onSearch}
+        class=${classMap(searchClasses)}
+      ></design-docs-sidenav-search>
+      <nav>
+        <ul>
+          ${this.routeTree.map((item) => this.renderTreeItem(item))}
+        </ul>
+      </nav>`;
   }
 
   renderTreeItem(treeItem: RouteTreeItem) {
@@ -64,6 +76,10 @@ export class SideNavElement extends LitElement {
       return html`<li><a href="${route.path}">${route.label}</a></li>`;
     }
   }
+
+  private onSearch(event: SideNavSearchSearchEvent): void {
+    console.info("Search happened!", event.detail);
+  }
 }
 
 /**
@@ -74,7 +90,7 @@ export class SideNavGroupElement extends LitElement {
   /**
    * Whether group is expanded. Updated on interaction
    */
-  @property()
+  @property({ attribute: true, type: Boolean })
   expanded = false;
 
   /**
@@ -104,7 +120,7 @@ export class SideNavGroupElement extends LitElement {
   `;
 
   render() {
-    return html`<li>
+    return html` <li>
       <span
         @click="${this.toggleExpansion}"
         tabindex="-1"
@@ -122,3 +138,42 @@ export class SideNavGroupElement extends LitElement {
     this.expanded = !this.expanded;
   }
 }
+
+/**
+ * Basic sidenav header with search
+ */
+@customElement("design-docs-sidenav-search")
+export class SideNavSearchElement extends LitElement {
+  @property() placeholder = "Search";
+
+  static styles = css`
+    :host {
+      font-family: var(--sidenav-font);
+      display: flex;
+      padding: var(--sidenav-item-spacing, 0.25em);
+      background-color: var(--sidenav-accent-color, silver);
+    }
+    input {
+      flex: 1;
+    }
+  `;
+
+  render() {
+    return html`<input
+      type="search"
+      placeholder="${this.placeholder}"
+      @input=${this.onSearchChange}
+    />`;
+  }
+
+  private onSearchChange(event: InputEvent): void {
+    this.dispatchEvent(
+      new CustomEvent("search", {
+        detail: (event.target as HTMLInputElement).value,
+        composed: true,
+      })
+    );
+  }
+}
+
+export type SideNavSearchSearchEvent = CustomEvent<string>;

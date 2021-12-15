@@ -7,9 +7,6 @@ export class SideBarElement extends LitElement {
     :host {
       box-shadow: 1px 0 var(--sidebar-padding, 4px) rgba(0, 0, 0, 0.25);
     }
-    aside {
-      padding: var(--sidebar-padding);
-    }
   `;
   render() {
     return html`<aside>
@@ -26,7 +23,8 @@ export class SideBarHeaderElement extends LitElement {
 
   static styles = css`
     :host {
-      margin: var(--sidebar-padding) 0;
+      margin: var(--sidebar-padding);
+      display: block;
     }
     header {
       font-size: var(--sidebar-header-font-size);
