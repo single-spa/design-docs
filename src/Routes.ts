@@ -1,12 +1,25 @@
 /**
+ * React Component, Vue Component, Angular Module, or HTML String
+ * Also support function returning promise that resolves to one of the above
+ */
+export type ComponentReference = unknown;
+
+export enum RouteFramework {
+  VUE = "vue",
+  REACT = "react",
+  ANGULAR = "angular",
+  HTML = "html",
+}
+
+/**
  * Individual route for a navigation item
  */
 export interface Route {
   label: string;
   path: string;
   group?: string;
-  component?: unknown;
-  framework?: string;
+  component?: ComponentReference | (() => Promise<ComponentReference>);
+  framework?: RouteFramework;
 }
 
 /** Collection of Routes */
@@ -47,6 +60,7 @@ export const resolveRouteStructure = (routes: Routes): RouteTree => {
             ]}
         ]}
     ]
+   
     */
   return [];
 };

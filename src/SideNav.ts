@@ -144,6 +144,7 @@ export class SideNavGroupElement extends LitElement {
  */
 @customElement("design-docs-sidenav-search")
 export class SideNavSearchElement extends LitElement {
+  /** Search input placeholder text */
   @property() placeholder = "Search";
 
   static styles = css`
