@@ -11,8 +11,9 @@ import {
 } from "./Routes";
 
 /**
- * Main sidenav container element
- * Renders tree of nav links based on provided routes
+ * Renders sidenav tree based on route information.
+ *
+ * Note: Subtree expansion state will be lost on re-render, consider storing it internally
  */
 @customElement("design-docs-sidenav")
 export class SideNavElement extends LitElement {
@@ -49,6 +50,12 @@ export class SideNavElement extends LitElement {
     .hidden {
       display: none;
     }
+    ul[role="group"] {
+      padding-inline-start: var(--sidenav-group-indent, 1.25em);
+    }
+    li[aria-expanded="false"].expandable > ul {
+      display: none;
+    }
   `;
 
   render() {
@@ -58,7 +65,7 @@ export class SideNavElement extends LitElement {
         class=${classMap(searchClasses)}
       ></design-docs-sidenav-search>
       <nav>
-        <ul>
+        <ul role="tree">
           ${this.routeTree.map((item) => this.renderTreeItem(item))}
         </ul>
       </nav>`;
@@ -66,76 +73,36 @@ export class SideNavElement extends LitElement {
 
   renderTreeItem(treeItem: RouteTreeItem) {
     if (treeItem.type === RouteTreeItemType.GROUP) {
-      return html`<design-docs-sidenav-group label="${treeItem.label}">
-        ${treeItem.children?.map((item) =>
-          this.renderTreeItem(item)
-        )}</design-docs-sidenav-group
-      >`;
+      return html`<li role="treeitem" class="expandable" aria-expanded="false">
+        <span
+          class="group-label"
+          tabindex="0"
+          @click="${this.onTreeGroupToggle}"
+          >${treeItem.label}</span
+        >
+        <ul role="group">
+          ${treeItem.children?.map((item) => this.renderTreeItem(item))}
+        </ul>
+      </li> `;
     } else {
       const route: Route = this.routes[treeItem.index];
-      return html`<li><a href="${route.path}">${route.label}</a></li>`;
+      return html`<li role="treeitem">
+        <a href="${route.path}">${route.label}</a>
+      </li>`;
     }
   }
 
   private onSearch(event: SideNavSearchSearchEvent): void {
     console.info("Search happened!", event.detail);
   }
-}
 
-/**
- * An expandable group used by sidenav
- */
-@customElement("design-docs-sidenav-group")
-export class SideNavGroupElement extends LitElement {
-  /**
-   * Whether group is expanded. Updated on interaction
-   */
-  @property({ attribute: true, type: Boolean })
-  expanded = false;
-
-  /**
-   * Label to render for group
-   */
-  @property()
-  label = "";
-
-  static styles = css`
-    :host {
-      font-family: var(--sidenav-font);
+  private onTreeGroupToggle(event: PointerEvent): void {
+    const el = (event.target as HTMLSpanElement).parentElement;
+    if (el?.ariaExpanded === "true") {
+      el.ariaExpanded = "false";
+    } else {
+      el?.setAttribute("aria-expanded", "true");
     }
-    ul {
-      margin-block-start: var(--sidenav-item-spacing, 0.25em);
-      margin-block-end: var(--sidenav-item-spacing, 0.25em);
-      padding-inline-start: var(--sidenav-group-indent, 1.25em);
-    }
-    li:not(:first-child) {
-      margin-top: var(--sidenav-item-spacing, 0.25em);
-    }
-    li:not(:last-child) {
-      margin-bottom: var(--sidenav-item-spacing, 0.25em);
-    }
-    span[aria-expanded="false"] + ul {
-      display: none;
-    }
-  `;
-
-  render() {
-    return html` <li>
-      <span
-        @click="${this.toggleExpansion}"
-        tabindex="-1"
-        aria-expanded="${this.expanded}"
-        aria-role="treeitem"
-        >${this.label}</span
-      >
-      <ul>
-        <slot></slot>
-      </ul>
-    </li>`;
-  }
-
-  private toggleExpansion() {
-    this.expanded = !this.expanded;
   }
 }
 
