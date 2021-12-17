@@ -5,7 +5,7 @@ import { customElement, property } from "lit/decorators.js";
 export class SideBarElement extends LitElement {
   static styles = css`
     :host {
-      box-shadow: 1px 0 var(--sidebar-padding, 4px) rgba(0, 0, 0, 0.25);
+      box-shadow: 1px 0 var(--dd-sidebar-padding, 4px) rgba(0, 0, 0, 0.25);
     }
   `;
   render() {
@@ -23,15 +23,15 @@ export class SideBarHeaderElement extends LitElement {
 
   static styles = css`
     :host {
-      margin: var(--sidebar-padding);
+      margin: var(--dd-sidebar-padding);
       display: block;
     }
     header {
-      font-size: var(--sidebar-header-font-size);
-      font-family: var(--sidebar-header-font);
+      font-size: var(--dd-sidebar-header-font-size);
+      font-family: var(--dd-sidebar-header-font);
     }
     img {
-      width: var(--sidebar-header-font-size);
+      width: var(--dd-sidebar-header-font-size);
       margin-right: 0.25em;
     }
   `;

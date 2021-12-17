@@ -35,23 +35,23 @@ export class SideNavElement extends LitElement {
 
   static styles = css`
     :host {
-      font-family: var(--sidenav-font);
+      font-family: var(--dd-sidenav-font);
     }
     ul {
-      margin-block-start: var(--sidenav-item-spacing, 0.25em);
-      margin-block-end: var(--sidenav-item-spacing, 0.25em);
+      margin-block-start: var(--dd-sidenav-item-spacing, 0.25em);
+      margin-block-end: var(--dd-sidenav-item-spacing, 0.25em);
     }
     li:not(:first-child) {
-      margin-top: var(--sidenav-item-spacing, 0.25em);
+      margin-top: var(--dd-sidenav-item-spacing, 0.25em);
     }
     li:not(:last-child) {
-      margin-bottom: var(--sidenav-item-spacing, 0.25em);
+      margin-bottom: var(--dd-sidenav-item-spacing, 0.25em);
     }
     .hidden {
       display: none;
     }
     ul[role="group"] {
-      padding-inline-start: var(--sidenav-group-indent, 1.25em);
+      padding-inline-start: var(--dd-sidenav-group-indent, 1.25em);
     }
     li[aria-expanded="false"].expandable > ul {
       display: none;
@@ -116,10 +116,10 @@ export class SideNavSearchElement extends LitElement {
 
   static styles = css`
     :host {
-      font-family: var(--sidenav-font);
+      font-family: var(--dd-sidenav-font);
       display: flex;
-      padding: var(--sidenav-item-spacing, 0.25em);
-      background-color: var(--sidenav-accent-color, silver);
+      padding: var(--dd-sidenav-item-spacing, 0.25em);
+      background-color: var(--dd-sidenav-accent-color, silver);
     }
     input {
       flex: 1;
