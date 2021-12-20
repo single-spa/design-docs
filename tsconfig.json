@@ -1,5 +1,6 @@
 {
   "files": ["src/DesignDocComponents.ts"],
+  "include": ["src/declarations.d.ts"],
   "compilerOptions": {
     "declaration": true,
     "emitDeclarationOnly": true,
