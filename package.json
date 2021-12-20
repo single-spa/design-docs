@@ -14,8 +14,7 @@
     "watch-build:babel": "npm run build:babel -- --watch",
     "watch-build:types": "npm run build:types -- --watch",
     "check-format": "prettier --check .",
-    "test": "concurrently npm:watch-build npm:test:manual",
-    "test:manual": "http-server --port 9100 -c-1 -o /test/index.html . ",
+    "dev": "concurrently npm:watch-build \"http-server --port 9100 -c-1 -o /test/index.html .\"",
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable"
