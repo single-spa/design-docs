@@ -15,6 +15,7 @@
     "watch-build:types": "npm run build:types -- --watch",
     "check-format": "prettier --check .",
     "dev": "concurrently npm:watch-build \"http-server --port 9100 -c-1 -o /test/index.html .\"",
+    "test": "jest --passWithNoTests",
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable"
