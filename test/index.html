@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        --dd-sidebar-padding: 8px;
+        --dd-sidebar-header-font-size: 1.25rem;
+        --dd-sidebar-header-font: "Arial";
+        --dd-sidenav-font: "Arial";
+      }
+    </style>
+  </head>
+  <body>
+    <design-docs-root>
+      <design-docs-sidebar slot="sidebar">
+        <design-docs-sidebar-header slot="header"
+          >DesignDocs Demo</design-docs-sidebar-header
+        >
+        <design-docs-sidenav slot="content" searchable></design-docs-sidenav>
+      </design-docs-sidebar>
+      <div style="flex: 1" slot="content">x</div>
+    </design-docs-root>
+    <!--
+      JSPM Generator Import Map
+      Edit URL: https://generator.jspm.io/#U2VhYGBkDM0rySzJSU1hyMkscTDSM9AzAgBAgq5TGAA
+    -->
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://ga.jspm.io/npm:lit@2.0.2/index.js",
+          "lit/decorators.js": "https://ga.jspm.io/npm:lit@2.0.2/decorators.js",
+          "lit/directives/class-map.js": "https://ga.jspm.io/npm:lit@2.0.2/directives/class-map.js"
+        },
+        "scopes": {
+          "https://ga.jspm.io/": {
+            "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/reactive-element.js",
+            "@lit/reactive-element/decorators/custom-element.js": "https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/custom-element.js",
+            "@lit/reactive-element/decorators/event-options.js": "https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/event-options.js",
+            "@lit/reactive-element/decorators/property.js": "https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/property.js",
+            "@lit/reactive-element/decorators/query-all.js": "https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/query-all.js",
+            "@lit/reactive-element/decorators/query-assigned-nodes.js": "https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/query-assigned-nodes.js",
+            "@lit/reactive-element/decorators/query-async.js": "https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/query-async.js",
+            "@lit/reactive-element/decorators/query.js": "https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/query.js",
+            "@lit/reactive-element/decorators/state.js": "https://ga.jspm.io/npm:@lit/reactive-element@1.0.2/development/decorators/state.js",
+            "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@3.0.2/development/lit-element.js",
+            "lit-html": "https://ga.jspm.io/npm:lit-html@2.0.2/development/lit-html.js",
+            "lit-html/directives/class-map.js": "https://ga.jspm.io/npm:lit-html@2.0.2/development/directives/class-map.js"
+          }
+        }
+      }
+    </script>
+    <script type="module">
+      import "/dist/DesignDocComponents.js";
+
+      const nav = document.querySelector("design-docs-sidenav");
+      console.info("Sidenav:", nav);
+      nav.routes = [
+        {
+          label: "Intro",
+          path: "intro",
+        },
+        {
+          label: "Typography",
+          path: "style/typography",
+        },
+        {
+          label: "Flat Button",
+          path: "buttons/flat",
+          group: "Buttons",
+        },
+        {
+          label: "Icon Button",
+          path: "buttons/icon",
+          group: "Buttons",
+        },
+      ];
+      nav.routeTree = [
+        {
+          type: "route",
+          index: 0,
+        },
+        {
+          type: "route",
+          index: 1,
+        },
+        {
+          type: "group",
+          label: "Buttons",
+          children: [
+            {
+              type: "route",
+              index: 2,
+            },
+            {
+              type: "route",
+              index: 3,
+            },
+          ],
+        },
+      ];
+    </script>
+  </body>
+</html>

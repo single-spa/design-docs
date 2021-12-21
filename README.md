@@ -1,38 +1,12 @@
 # design-docs
 
-```jsx
-import {
-  Documentation,
-  SideNav,
-  SideNavMenuItem,
-  TopNav,
-  Content,
-  Sandbox,
-} from "ourlib";
+## Contributing
 
-export const MyStory = () => <Button />;
+After cloning the repo, run the following commands
 
-export default function WalmartDocumentation(props) {
-  return (
-    <>
-      <SideNav>
-        <SideNavMenuItem />
-      </SideNav>
-      <TopNav />
-      <Content>
-        <Sandbox component={Button} />
-        <div>Primary button</div>
-        <Button variant="primary" />
-        <div>Secondary button</div>
-        <Button variant="secondary" />
-      </Content>
-    </>
-  );
-}
-
-function Button(props: ButtonProps) {}
-
-interface ButtonProps {
-  variant: string;
-}
 ```
+npm install
+npm dev
+```
+
+A browser window will open where you can see any changes you've made to the code. A file watcher also will rebuild everything whenever you make changes.

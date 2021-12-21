@@ -19,7 +19,7 @@ export class SideBarElement extends LitElement {
 @customElement("design-docs-sidebar-header")
 export class SideBarHeaderElement extends LitElement {
   @property()
-  logoSrc = "";
+  logoSrc = new URL("/static/Test-Logo.png", window.designDocsBaseUrl).href;
 
   static styles = css`
     :host {
