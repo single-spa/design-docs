@@ -55,6 +55,7 @@
     </script>
     <script type="module">
       import "/dist/DesignDocComponents.js";
+      import { resolveRouteStructure } from "/dist/DesignDocComponents.js";
 
       const nav = document.querySelector("design-docs-sidenav");
       console.info("Sidenav:", nav);
@@ -78,30 +79,7 @@
           group: "Buttons",
         },
       ];
-      nav.routeTree = [
-        {
-          type: "route",
-          index: 0,
-        },
-        {
-          type: "route",
-          index: 1,
-        },
-        {
-          type: "group",
-          label: "Buttons",
-          children: [
-            {
-              type: "route",
-              index: 2,
-            },
-            {
-              type: "route",
-              index: 3,
-            },
-          ],
-        },
-      ];
+      nav.routeTree = resolveRouteStructure(nav.routes);
     </script>
   </body>
 </html>
