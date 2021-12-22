@@ -1,5 +1,5 @@
 import { LitElement, css, html } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 
 import {
@@ -32,6 +32,9 @@ export class SideNavElement extends LitElement {
 
   @property({ attribute: true, type: Boolean })
   searchable = false;
+
+  /** Active search string */
+  @state() searchString = "";
 
   static styles = css`
     :host {
@@ -86,14 +89,26 @@ export class SideNavElement extends LitElement {
       </li> `;
     } else {
       const route: Route = this.routes[treeItem.index];
+      if (this.itemHiddenForSearch(route)) {
+        // Hide if outside search
+        return null;
+      }
       return html`<li role="treeitem">
         <a href="${route.path}">${route.label}</a>
       </li>`;
     }
   }
 
+  private itemHiddenForSearch(route: Route): boolean {
+    if (this.searchable && this.searchString) {
+      return !route.label?.includes(this.searchString);
+    }
+    return false;
+  }
+
   private onSearch(event: SideNavSearchSearchEvent): void {
     console.info("Search happened!", event.detail);
+    this.searchString = event.detail;
   }
 
   private onTreeGroupToggle(event: PointerEvent): void {
