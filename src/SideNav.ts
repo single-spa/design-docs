@@ -59,6 +59,13 @@ export class SideNavElement extends LitElement {
     li[aria-expanded="false"].expandable > ul {
       display: none;
     }
+    .group-label {
+      cursor: pointer;
+    }
+    a {
+      text-decoration: none;
+      color: black;
+    }
   `;
 
   render() {
@@ -80,7 +87,8 @@ export class SideNavElement extends LitElement {
         <span
           class="group-label"
           tabindex="0"
-          @click="${this.onTreeGroupToggle}"
+          @click="${this.onTreeGroupClick}"
+          @keydown="${this.onTreeGroupKeyDown}"
           >${treeItem.label}</span
         >
         <ul role="group">
@@ -111,9 +119,20 @@ export class SideNavElement extends LitElement {
     this.searchString = event.detail;
   }
 
-  private onTreeGroupToggle(event: PointerEvent): void {
+  private onTreeGroupKeyDown(event: KeyboardEvent): void {
+    if (event.key === "Enter") {
+      const el = (event.target as HTMLSpanElement).parentElement;
+      this.treeGroupToggle(el);
+    }
+  }
+
+  private onTreeGroupClick(event: PointerEvent): void {
     const el = (event.target as HTMLSpanElement).parentElement;
-    if (el?.ariaExpanded === "true") {
+    this.treeGroupToggle(el);
+  }
+
+  private treeGroupToggle(el: HTMLElement | null): void {
+    if (el && el?.ariaExpanded === "true") {
       el.ariaExpanded = "false";
     } else {
       el?.setAttribute("aria-expanded", "true");
