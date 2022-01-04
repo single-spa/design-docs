@@ -50,7 +50,7 @@ export type RouteTree = RouteTreeItem[];
  * @returns Structured route navigation tree
  * @example
  * const input = [
-        {lbel: 'Intro', path: 'intro'},
+        {label: 'Intro', path: 'intro'},
         {label: 'Push Button', group: 'Inputs/Buttons', path: 'push-button'},
         {label: 'Reset Button', group: 'Inputs/Buttons', path: 'reset-button'}
     ];
