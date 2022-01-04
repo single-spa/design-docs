@@ -8,7 +8,12 @@
         "decoratorsBeforeExport": true
       }
     ],
-    "babel-plugin-add-import-extension",
     "@babel/plugin-proposal-class-properties"
-  ]
+  ],
+  "env": {
+    "build": {
+      "ignore": ["**/*.spec.ts"],
+      "plugins": ["babel-plugin-add-import-extension"]
+    }
+  }
 }
