@@ -39,6 +39,12 @@ export class SideNavElement extends LitElement {
   static styles = css`
     :host {
       font-family: var(--dd-sidenav-font);
+      display: flex;
+      flex-direction: column;
+    }
+    nav {
+      flex: 1;
+      overflow-y: auto;
     }
     ul {
       margin-block-start: var(--dd-sidenav-item-spacing, 0.25em);
