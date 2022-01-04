@@ -8,7 +8,7 @@
     "format": "prettier --write .",
     "lint": "eslint \"src/**/*\"",
     "build": "rimraf dist && concurrently npm:build:*",
-    "build:babel": "cross-env BABEL_ENV=build babel src --extensions \".ts\" --out-dir dist --source-maps --ignore \"src/**/*.spec.ts\"",
+    "build:babel": "cross-env BABEL_ENV=build babel src --extensions \".ts\" --out-dir dist --source-maps",
     "build:types": "tsc",
     "watch-build": "concurrently npm:watch-build:*",
     "watch-build:babel": "npm run build:babel -- --watch",
