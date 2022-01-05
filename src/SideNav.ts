@@ -79,6 +79,7 @@ export class SideNavElement extends LitElement {
     .icon {
       width: 1em;
       height: 1em;
+      vertical-align: top;
     }
   `;
 
