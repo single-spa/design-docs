@@ -1,4 +1,4 @@
-import { LitElement, css, html } from "lit";
+import { LitElement, css, html, svg } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 
@@ -49,6 +49,7 @@ export class SideNavElement extends LitElement {
     ul {
       margin-block-start: var(--dd-sidenav-item-spacing, 0.25em);
       margin-block-end: var(--dd-sidenav-item-spacing, 0.25em);
+      padding-inline-start: 1em;
     }
     li:not(:first-child) {
       margin-top: var(--dd-sidenav-item-spacing, 0.25em);
@@ -65,12 +66,19 @@ export class SideNavElement extends LitElement {
     li[aria-expanded="false"].expandable > ul {
       display: none;
     }
+    li {
+      list-style-type: none;
+    }
     .group-label {
       cursor: pointer;
     }
     a {
       text-decoration: none;
       color: black;
+    }
+    .icon {
+      width: 1em;
+      height: 1em;
     }
   `;
 
@@ -90,6 +98,7 @@ export class SideNavElement extends LitElement {
   renderTreeItem(treeItem: RouteTreeItem) {
     if (treeItem.type === RouteTreeItemType.GROUP) {
       return html`<li role="treeitem" class="expandable" aria-expanded="false">
+        ${this.renderGroupIcon()}
         <span
           class="group-label"
           tabindex="0"
@@ -98,7 +107,7 @@ export class SideNavElement extends LitElement {
           >${treeItem.label}</span
         >
         <ul role="group">
-          ${treeItem.children?.map((item) => this.renderTreeItem(item))}
+          ${treeItem.children.map((item) => this.renderTreeItem(item))}
         </ul>
       </li> `;
     } else {
@@ -108,9 +117,40 @@ export class SideNavElement extends LitElement {
         return null;
       }
       return html`<li role="treeitem">
+        ${this.renderRouteIcon()}
         <a href="${route.path}">${route.label}</a>
       </li>`;
     }
+  }
+
+  // TODO: Consider moving into SVG file
+  private renderRouteIcon() {
+    return svg`<svg class="icon" viewBox="0 0 196 196" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(44.000000, 32.000000)" stroke="#000000">
+            <path d="M82.7871267,2 L107,26.1011169 L107,131 L2,131 L2,2 L82.7871267,2 Z" id="Path" stroke-width="4"></path>
+            <polyline id="Path-2" stroke-width="4" points="82 0 82 27 108 27"></polyline>
+            <line x1="10.3503937" y1="37.5" x2="98.6496063" y2="37.5" id="Line" stroke-width="3" stroke-linecap="square"></line>
+            <line x1="10.3503937" y1="94.5" x2="98.6496063" y2="94.5" id="Line" stroke-width="3" stroke-linecap="square"></line>
+            <line x1="10.3503937" y1="66.5" x2="98.6496063" y2="66.5" id="Line" stroke-width="3" stroke-linecap="square"></line>
+            <line x1="20.35" y1="51.5" x2="89.65" y2="51.5" id="Line" stroke-width="3" stroke-linecap="square"></line>
+            <line x1="20.35" y1="80.5" x2="89.65" y2="80.5" id="Line" stroke-width="3" stroke-linecap="square"></line>
+            <line x1="19" y1="108.25" x2="89" y2="108.75" id="Line" stroke-width="3" stroke-linecap="square"></line>
+        </g>
+    </g>
+  </svg>`;
+  }
+
+  // TODO: Consider moving into SVG file
+  private renderGroupIcon() {
+    return svg`<svg class="icon" viewBox="0 0 196 196" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g transform="translate(9.000000, 34.000000)" stroke="#000000" stroke-width="4">
+        <rect id="Rectangle" x="0" y="18" width="178" height="109" rx="8"></rect>
+        <path d="M164,0 C168.418278,0 172,3.581722 172,8 L172.000358,12.2521271 C175.450631,13.1403373 178,16.2724501 178,20 L178,119 C178,123.418278 174.418278,127 170,127 L8,127 C3.581722,127 5.68434189e-14,123.418278 5.68434189e-14,119 L5.68434189e-14,20 C5.68434189e-14,15.581722 3.581722,12 8,12 L93,12 L93,8 C93,3.581722 96.581722,0 101,0 L164,0 Z" id="Path"></path>
+    </g>
+  </g>
+</svg>`;
   }
 
   private itemHiddenForSearch(route: Route): boolean {

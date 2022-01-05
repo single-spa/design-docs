@@ -28,7 +28,6 @@ const singleFlatGroupData: RouteTestSet = {
   ],
   output: [
     {
-      index: -1,
       type: RouteTreeItemType.GROUP,
       label: "Group",
       children: [
@@ -50,13 +49,11 @@ const twoLevelData: RouteTestSet = {
     { type: RouteTreeItemType.ROUTE, index: 0 },
     {
       type: RouteTreeItemType.GROUP,
-      index: -1,
       label: "Inputs",
       children: [
         { type: RouteTreeItemType.ROUTE, index: 1 },
         {
           type: RouteTreeItemType.GROUP,
-          index: -1,
           label: "Buttons",
           children: [
             { type: RouteTreeItemType.ROUTE, index: 2 },

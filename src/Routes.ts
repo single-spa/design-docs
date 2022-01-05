@@ -33,13 +33,16 @@ export enum RouteTreeItemType {
   ROUTE = "route",
 }
 
-export interface RouteTreeItem {
-  type: RouteTreeItemType;
+export type RouteTreeItem = RouteTreeGroup | RouteTreeRoute;
+export interface RouteTreeGroup {
+  type: RouteTreeItemType.GROUP;
+  label: string;
+  children: RouteTreeItem[];
+}
+export interface RouteTreeRoute {
+  type: RouteTreeItemType.ROUTE;
   // index of route in Routes if this is a route; default to -1 for group?
   index: number;
-  // label (for group)
-  label?: string;
-  children?: RouteTreeItem[];
 }
 
 export type RouteTree = RouteTreeItem[];
@@ -87,8 +90,7 @@ export const resolveRouteStructure = (routes: Routes): RouteTree => {
   const buildGroups = (groupName: string): RouteTreeItem => {
     const refs = traceGroupRef(groupName);
     const groupPath = groupName.split(RouteGroupDelimiter).slice(refs.length);
-    let group: RouteTreeItem = {
-      index: -1,
+    let group: RouteTreeGroup = {
       type: RouteTreeItemType.GROUP,
       label: "",
       children: [],
@@ -110,7 +112,7 @@ export const resolveRouteStructure = (routes: Routes): RouteTree => {
       );
       groupRefMap[name] = group;
       if (parent) {
-        parent.children?.push(group);
+        (parent as RouteTreeGroup).children.push(group);
       } else {
         tree.push(group);
       }
@@ -126,7 +128,7 @@ export const resolveRouteStructure = (routes: Routes): RouteTree => {
       if (!groupRef) {
         groupRef = buildGroups(route.group);
       }
-      groupRef.children?.push({
+      (groupRef as RouteTreeGroup).children.push({
         index,
         type: RouteTreeItemType.ROUTE,
       });
