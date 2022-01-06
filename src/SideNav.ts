@@ -45,11 +45,19 @@ export class SideNavElement extends LitElement {
     nav {
       flex: 1;
       overflow-y: auto;
+      overflow-x: auto;
     }
     ul {
       margin-block-start: var(--dd-sidenav-item-spacing, 0.25em);
       margin-block-end: var(--dd-sidenav-item-spacing, 0.25em);
       padding-inline-start: 1em;
+    }
+    ul[role="group"] {
+      padding-inline-start: var(--dd-sidenav-group-indent, 1.25em);
+    }
+    li {
+      list-style-type: none;
+      white-space: nowrap;
     }
     li:not(:first-child) {
       margin-top: var(--dd-sidenav-item-spacing, 0.25em);
@@ -57,17 +65,11 @@ export class SideNavElement extends LitElement {
     li:not(:last-child) {
       margin-bottom: var(--dd-sidenav-item-spacing, 0.25em);
     }
-    .hidden {
-      display: none;
-    }
-    ul[role="group"] {
-      padding-inline-start: var(--dd-sidenav-group-indent, 1.25em);
-    }
     li[aria-expanded="false"].expandable > ul {
       display: none;
     }
-    li {
-      list-style-type: none;
+    .hidden {
+      display: none;
     }
     .group-label {
       cursor: pointer;

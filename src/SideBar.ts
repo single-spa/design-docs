@@ -5,13 +5,20 @@ import { customElement, property } from "lit/decorators.js";
 export class SideBarElement extends LitElement {
   static styles = css`
     :host {
+      position: relative;
+      overflow: hidden;
+      width: var(--dd-sidebar-width, 300px);
       box-shadow: 1px 0 var(--dd-sidebar-padding, 4px) rgba(0, 0, 0, 0.25);
-      display: flex;
     }
     ::slotted(design-docs-sidenav) {
       flex: 1;
     }
     aside {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
       display: flex;
       flex-direction: column;
     }
