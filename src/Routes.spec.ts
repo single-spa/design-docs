@@ -10,6 +10,7 @@ interface RouteTestSet {
   output: RouteTree;
 }
 
+// #region [Test Data]
 const flatData: RouteTestSet = {
   input: [
     { label: "First", path: "flat-first" },
@@ -65,6 +66,42 @@ const twoLevelData: RouteTestSet = {
   ],
 };
 
+const directlyNestedGroupsData: RouteTestSet = {
+  input: [
+    {
+      label: "Item nested in directly nested groups",
+      path: "item",
+      group: "A/B/C/D",
+    },
+  ],
+  output: [
+    {
+      type: RouteTreeItemType.GROUP,
+      label: "A",
+      children: [
+        {
+          type: RouteTreeItemType.GROUP,
+          label: "B",
+          children: [
+            {
+              type: RouteTreeItemType.GROUP,
+              label: "C",
+              children: [
+                {
+                  type: RouteTreeItemType.GROUP,
+                  label: "D",
+                  children: [{ type: RouteTreeItemType.ROUTE, index: 0 }],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+// #endregion
+
 describe("resolveRouteStructure()", () => {
   describe("when given a flat list of routes", () => {
     it("should return a flat tree", () => {
@@ -85,6 +122,13 @@ describe("resolveRouteStructure()", () => {
     it("should return appropriate structure", () => {
       const tree = resolveRouteStructure(twoLevelData.input);
       expect(tree).toEqual(twoLevelData.output);
+    });
+  });
+
+  describe("when route creates multiple nested group levels", () => {
+    it("should return route in directly nested groups", () => {
+      const tree = resolveRouteStructure(directlyNestedGroupsData.input);
+      expect(tree).toEqual(directlyNestedGroupsData.output);
     });
   });
 });

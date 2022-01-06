@@ -72,6 +72,11 @@ export const resolveRouteStructure = (routes: Routes): RouteTree => {
   const tree: RouteTree = [];
   const groupRefMap: Record<string, RouteTreeItem> = {};
 
+  /**
+   * Trace group references to deepest that exists
+   * @param groupName Group name path to trace
+   * @returns Array of existing group references
+   */
   const traceGroupRef = (groupName: string): RouteTreeItem[] => {
     const groupPath = groupName.split(RouteGroupDelimiter);
     const refs: RouteTreeItem[] = [];
@@ -87,37 +92,54 @@ export const resolveRouteStructure = (routes: Routes): RouteTree => {
     return refs;
   };
 
+  /**
+   * Constructs any groups not already created in groupName path and returns the deepest
+   * @param groupName Group name from route
+   * @returns Deepest group reference
+   */
   const buildGroups = (groupName: string): RouteTreeItem => {
-    const refs = traceGroupRef(groupName);
-    const groupPath = groupName.split(RouteGroupDelimiter).slice(refs.length);
+    const groupRefs = traceGroupRef(groupName);
+    /** template group tree item */
     let group: RouteTreeGroup = {
       type: RouteTreeItemType.GROUP,
       label: "",
       children: [],
     };
-    let parent = refs[refs.length - 1];
-    const groupPrefix = refs.length
-      ? `${groupName
-          .split(RouteGroupDelimiter)
-          .slice(0, refs.length)
+    // Set initial parent group to deepest existing, if any
+    let parentGroup = groupRefs[groupRefs.length - 1];
+    const path = groupName.split(RouteGroupDelimiter);
+    /** Prefix for group names that will be constructed, containing delimited list of any existing group names */
+    const groupPrefix = groupRefs.length
+      ? `${path
+          .slice(0, groupRefs.length)
           .join(RouteGroupDelimiter)}${RouteGroupDelimiter}`
       : "";
-    for (let i = 0; i < groupPath.length; i++) {
-      group = {
-        ...group,
-        label: groupPath[i],
-      };
+    /** Names of groups that need to be created */
+    const pathSteps = path.slice(groupRefs.length);
+
+    // at this point, pathSteps will consist only of groups that need to be created,
+    // since existing groups found and stored in groupRefs have been sliced off
+    // the start of the path
+    for (let stepIdx = 0; stepIdx < pathSteps.length; stepIdx++) {
+      group = { ...group, label: pathSteps[stepIdx], children: [] };
+      /** Name of the group being constructed, with prefix + any previous
+       * group names created in prior iterations */
       const name = groupPrefix.concat(
-        groupPath.slice(0, i + 1).join(RouteGroupDelimiter)
+        pathSteps.slice(0, stepIdx + 1).join(RouteGroupDelimiter)
       );
       groupRefMap[name] = group;
-      if (parent) {
-        (parent as RouteTreeGroup).children.push(group);
+      if (parentGroup) {
+        // We have a parent group, so this isn't a root level group
+        // Add new group to parent
+        (parentGroup as RouteTreeGroup).children.push(group);
       } else {
+        // Adding to tree root
         tree.push(group);
       }
-      parent = group;
+      // new group becomes parent
+      parentGroup = group;
     }
+
     return group;
   };
 
